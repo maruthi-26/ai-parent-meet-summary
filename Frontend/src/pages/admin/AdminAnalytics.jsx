@@ -308,10 +308,11 @@ export default function AdminAnalytics() {
             <div className="h-[240px] flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                  <Pie data={pieData} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
+                  <Pie data={pieData} cx="50%" cy="50%" outerRadius={65} dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`} labelLine={false}>
                     {pieData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                   </Pie>
                   <Tooltip />
+                  <Legend verticalAlign="bottom" height={36} wrapperStyle={{ fontSize: "11px" }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -333,24 +334,24 @@ export default function AdminAnalytics() {
               <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-slate-100 text-slate-500">
-                    <th className="text-left py-2 font-semibold uppercase tracking-wide">Teacher</th>
-                    <th className="text-center py-2 font-semibold text-orange-500 uppercase tracking-wide">Meetings</th>
-                    <th className="text-center py-2 font-semibold text-purple-500 uppercase tracking-wide">AI Summaries</th>
-                    <th className="text-center py-2 font-semibold text-teal-500 uppercase tracking-wide">Messages</th>
-                    <th className="text-center py-2 font-semibold text-slate-600 uppercase tracking-wide">Feedback</th>
-                    <th className="text-center py-2 font-semibold text-amber-500 uppercase tracking-wide">Satisfaction</th>
-                    <th className="text-center py-2 font-semibold text-rose-500 uppercase tracking-wide">Pending</th>
+                    <th className="text-left px-3 py-3 font-semibold uppercase tracking-wide whitespace-nowrap">Teacher</th>
+                    <th className="text-center px-3 py-3 font-semibold text-orange-500 uppercase tracking-wide whitespace-nowrap">Meetings</th>
+                    <th className="text-center px-3 py-3 font-semibold text-purple-500 uppercase tracking-wide whitespace-nowrap">AI Summaries</th>
+                    <th className="text-center px-3 py-3 font-semibold text-teal-500 uppercase tracking-wide whitespace-nowrap">Messages</th>
+                    <th className="text-center px-3 py-3 font-semibold text-slate-600 uppercase tracking-wide whitespace-nowrap">Feedback</th>
+                    <th className="text-center px-3 py-3 font-semibold text-amber-500 uppercase tracking-wide whitespace-nowrap">Satisfaction</th>
+                    <th className="text-center px-3 py-3 font-semibold text-rose-500 uppercase tracking-wide whitespace-nowrap">Pending</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data?.teacherPerformance?.map((t) => (
                     <tr key={t.id} className="border-b border-slate-50 hover:bg-slate-50 transition-colors text-slate-600">
-                      <td className="py-3 font-semibold text-slate-700">{t.name}</td>
-                      <td className="text-center py-3 font-bold text-orange-500">{t.meetings}</td>
-                      <td className="text-center py-3 font-bold text-purple-500">{t.aiSummaries}</td>
-                      <td className="text-center py-3 font-bold text-teal-500">{t.messagesSent}</td>
-                      <td className="text-center py-3 font-bold">{t.feedbackCount}</td>
-                      <td className="text-center py-3 font-bold text-amber-500">
+                      <td className="px-3 py-3 font-semibold text-slate-700 whitespace-nowrap">{t.name}</td>
+                      <td className="text-center px-3 py-3 font-bold text-orange-500">{t.meetings}</td>
+                      <td className="text-center px-3 py-3 font-bold text-purple-500">{t.aiSummaries}</td>
+                      <td className="text-center px-3 py-3 font-bold text-teal-500">{t.messagesSent}</td>
+                      <td className="text-center px-3 py-3 font-bold">{t.feedbackCount}</td>
+                      <td className="text-center px-3 py-3 font-bold text-amber-500">
                         {t.feedbackCount > 0 ? (
                           <span className="inline-flex items-center gap-0.5">
                             {t.averageSatisfaction} <Star size={11} className="fill-amber-400 text-amber-400" />
@@ -359,7 +360,7 @@ export default function AdminAnalytics() {
                           "N/A"
                         )}
                       </td>
-                      <td className="text-center py-3">
+                      <td className="text-center px-3 py-3">
                         {t.followUpsPending > 0 ? (
                           <span className="inline-flex items-center gap-1 bg-rose-50 text-rose-600 px-2 py-0.5 rounded-full text-[10px] font-bold animate-pulse">
                             <ShieldAlert size={10} /> {t.followUpsPending} Pending

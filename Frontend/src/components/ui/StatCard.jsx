@@ -2,6 +2,41 @@ import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
+const parseTrendValue = (val) => {
+  if (!val) return { badge: "", desc: "" };
+  
+  // 1. Matches "100% increase compared to last month" or similar
+  const matchPercent = val.match(/^(\d+(?:%|\.\d+%)?\s+\w+)\s+(.*)$/i);
+  if (matchPercent) {
+    return { badge: matchPercent[1], desc: matchPercent[2] };
+  }
+  
+  // 2. Matches "1 active educators" -> badge: "1 active", desc: "educators"
+  const matchActive = val.match(/^(\d+\s+active)\s+(.*)$/i);
+  if (matchActive) {
+    return { badge: matchActive[1], desc: matchActive[2] };
+  }
+
+  // 3. Matches "1 actions pending" -> badge: "1 pending", desc: "actions"
+  const matchPending = val.match(/^(\d+)\s+actions\s+pending$/i);
+  if (matchPending) {
+    return { badge: `${matchPending[1]} pending`, desc: "actions" };
+  }
+
+  // 4. Matches "1 pending" / "2 actions"
+  const matchGenericNum = val.match(/^(\d+\s+\w+)\s*(.*)$/);
+  if (matchGenericNum) {
+    return { badge: matchGenericNum[1], desc: matchGenericNum[2] || "" };
+  }
+  
+  // 5. Special case for No urgent actions
+  if (val.toLowerCase().includes("no urgent actions")) {
+    return { badge: "None", desc: "urgent actions" };
+  }
+
+  return { badge: val, desc: "" };
+};
+
 export default function StatCard({
   title,
   value = 0,
@@ -27,6 +62,8 @@ export default function StatCard({
         : (CountUp && typeof CountUp.CountUp === "function" 
             ? CountUp.CountUp 
             : null));
+
+  const { badge, desc } = parseTrendValue(trendValue);
 
   return (
     <motion.div
@@ -59,9 +96,16 @@ export default function StatCard({
           </div>
 
           {trend && trendValue && (
-            <div className={`inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full ${trendBg}`}>
-              <TrendIcon size={12} className={trendColor} />
-              <span className={`text-xs font-semibold ${trendColor}`}>{trendValue}</span>
+            <div className="flex flex-wrap items-center gap-1.5 mt-2">
+              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap shrink-0 ${trendBg} ${trendColor}`}>
+                <TrendIcon size={10} className={trendColor} />
+                {badge}
+              </span>
+              {desc && (
+                <span className="text-[10px] text-slate-400 font-medium leading-none">
+                  {desc}
+                </span>
+              )}
             </div>
           )}
         </div>
