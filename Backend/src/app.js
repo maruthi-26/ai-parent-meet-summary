@@ -18,7 +18,15 @@ const errorHandler = require("./middleware/error.middleware");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://parent-summary-frontend.onrender.com",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use((req, res, next) => {
