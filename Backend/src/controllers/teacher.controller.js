@@ -46,7 +46,7 @@ const createTeacher = async (req, res) => {
     const teacher = await prisma.teacher.create({
       data: {
         name,
-        email,
+        email: email ? email.toLowerCase().trim() : undefined,
         password: hashedPassword,
         role: role === "ADMIN" ? "ADMIN" : "TEACHER",
         classes: role === "ADMIN" ? null : classes,
@@ -71,7 +71,7 @@ const updateTeacher = async (req, res) => {
 
     const updateData = {
       name,
-      email,
+      email: email ? email.toLowerCase().trim() : undefined,
       role: role === "ADMIN" ? "ADMIN" : "TEACHER",
       classes: role === "ADMIN" ? null : classes,
       gender,

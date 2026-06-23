@@ -10,8 +10,9 @@ const crypto = require("crypto");
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    const cleanEmail = email ? email.toLowerCase().trim() : "";
 
-    const teacher = await prisma.teacher.findUnique({ where: { email } });
+    const teacher = await prisma.teacher.findUnique({ where: { email: cleanEmail } });
 
     if (!teacher) {
       return res.status(404).json({ success: false, message: "User not found" });
