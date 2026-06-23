@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Teacher {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(TEACHER)
+  classes   String?
+  gender    String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  meetings  Meeting[]
+  notices   Notice[]
+  students  Student[]
+  auditLogs AuditLog[]
+}
+
+model Student {
+  id          String    @id @default(cuid())
+  name        String
+  className   String
+  parentName  String
+  parentPhone String
+  parentEmail String?
+  gender      String?
+  riskLevel   String    @default("LOW")
+  riskExplanation String?
+  
+  teacherId   String?
+  teacher     Teacher?  @relation(fields: [teacherId], references: [id])
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  meetings    Meeting[]
+  auditLogs   AuditLog[]
+}
+
+model Meeting {
+  id                 String     @id @default(cuid())
+  teacherId          String
+  studentId          String
+  notes              String?
+  createdAt          DateTime   @default(now())
+  meetingDate        String?
+  meetingTime        String?
+  meetingStatus      String     @default("Scheduled")
+  aiSummary          String?
+  whatsappSent       Boolean    @default(false)
+  whatsappSentAt     DateTime?
+  emailSent          Boolean    @default(false)
+  emailSentAt        DateTime?
+  satisfactionRating Int?
+  riskLevel          String     @default("LOW")
+  riskExplanation    String?
+  followUpActions    String?
+  student            Student    @relation(fields: [studentId], references: [id])
+  teacher            Teacher    @relation(fields: [teacherId], references: [id])
+  feedback           Feedback?
+  auditLogs          AuditLog[]
+}
+
+model AuditLog {
+  id          String    @id @default(cuid())
+  teacherId   String
+  studentId   String?
+  meetingId   String?
+  action      String
+  details     String?
+  createdAt   DateTime  @default(now())
+  teacher     Teacher   @relation(fields: [teacherId], references: [id])
+  student     Student?  @relation(fields: [studentId], references: [id])
+  meeting     Meeting?  @relation(fields: [meetingId], references: [id])
+}
+
+model Notice {
+  id             String   @id @default(cuid())
+  title          String
+  content        String
+  targetAudience String   @default("ALL")
+  createdById    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+  createdBy      Teacher  @relation(fields: [createdById], references: [id])
+}
+
+model Feedback {
+  id                String   @id @default(cuid())
+  meetingId         String   @unique
+  rating            Int
+  satisfactionLevel String
+  comment           String?
+  sentiment         String
+  createdAt         DateTime @default(now())
+  meeting           Meeting  @relation(fields: [meetingId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+}

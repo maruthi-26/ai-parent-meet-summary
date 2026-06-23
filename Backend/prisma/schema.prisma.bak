@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Teacher {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String
+  isActive  Boolean  @default(true)
+
+  meetings  Meeting[]
+  notices   Notice[]
+  students  Student[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Student {
+  id          String   @id @default(cuid())
+
+  name        String
+  className   String
+
+  parentName  String
+  parentPhone String
+  parentEmail String?
+
+  teacherId   String?
+  teacher     Teacher? @relation(fields:[teacherId], references:[id])
+
+  meetings    Meeting[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Meeting {
+  id String @id @default(cuid())
+
+  teacherId String
+  studentId String
+
+  notes String?
+
+  aiSummary String?
+
+  whatsappSent Boolean @default(false)
+  whatsappSentAt DateTime?
+
+  emailSent Boolean @default(false)
+  emailSentAt DateTime?
+
+  satisfactionRating Int?
+
+  teacher Teacher @relation(fields:[teacherId], references:[id])
+
+  student Student @relation(fields:[studentId], references:[id])
+
+  parentFeedback ParentFeedback?
+
+  createdAt DateTime @default(now())
+}
+
+model Notice {
+  id             String   @id @default(cuid())
+  title          String
+  content        String
+  targetAudience String   @default("ALL")
+  createdById    String
+  createdBy      Teacher  @relation(fields:[createdById], references:[id])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ParentFeedback {
+  id        String   @id @default(cuid())
+  meetingId String   @unique
+  rating    Int
+  comment   String?
+  meeting   Meeting  @relation(fields:[meetingId], references:[id])
+  createdAt DateTime @default(now())
+}
