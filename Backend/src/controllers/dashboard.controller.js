@@ -1,4 +1,4 @@
-const prisma = require("../prisma/prisma");
+const prisma = require("../config/prisma");
 
 function calculateGrowth(current, previous) {
   if (previous === 0) {

@@ -1,4 +1,4 @@
-const prisma = require("../prisma/prisma");
+const prisma = require("../config/prisma");
 const bcrypt = require("bcryptjs");
 
 const getTeachers = async (req, res) => {
