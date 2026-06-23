@@ -70,49 +70,49 @@ export default function StatCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
-      className={`bg-white rounded-2xl p-5 shadow-sm border border-slate-100 card-hover ${onClick ? "cursor-pointer" : ""}`}
+      className={`bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-100 card-hover flex flex-col justify-between h-full ${onClick ? "cursor-pointer" : ""}`}
       onClick={onClick}
       whileHover={{ scale: 1.01 }}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
-            {title}
-          </p>
-          <div className="flex items-baseline gap-1">
-            <p className="text-3xl font-bold text-slate-800">
-              {CountUpComponent ? (
-                <CountUpComponent
-                  end={typeof value === "number" ? value : 0}
-                  duration={1.5}
-                  delay={delay + 0.2}
-                  separator=","
-                />
-              ) : (
-                typeof value === "number" ? value : 0
-              )}
-            </p>
-            {suffix && <span className="text-lg font-semibold text-slate-500">{suffix}</span>}
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <span className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider truncate">
+          {title}
+        </span>
+        {Icon && (
+          <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg ${gradient} flex items-center justify-center flex-shrink-0 shadow-sm`}>
+            <Icon size={16} className="text-white" />
           </div>
+        )}
+      </div>
 
-          {trend && trendValue && (
-            <div className="flex flex-wrap items-center gap-1.5 mt-2">
-              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold whitespace-nowrap shrink-0 ${trendBg} ${trendColor}`}>
-                <TrendIcon size={10} className={trendColor} />
-                {badge}
-              </span>
-              {desc && (
-                <span className="text-[10px] text-slate-400 font-medium leading-none">
-                  {desc}
-                </span>
-              )}
-            </div>
-          )}
+      <div className="space-y-1 sm:space-y-1.5 mt-auto">
+        <div className="flex items-baseline gap-1">
+          <span className="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
+            {CountUpComponent ? (
+              <CountUpComponent
+                end={typeof value === "number" ? value : 0}
+                duration={1.5}
+                delay={delay + 0.2}
+                separator=","
+              />
+            ) : (
+              typeof value === "number" ? value : 0
+            )}
+          </span>
+          {suffix && <span className="text-sm font-semibold text-slate-400">{suffix}</span>}
         </div>
 
-        {Icon && (
-          <div className={`w-12 h-12 rounded-xl ${gradient} flex items-center justify-center flex-shrink-0 shadow-sm`}>
-            <Icon size={22} className="text-white" />
+        {trend && trendValue && (
+          <div className="flex flex-wrap items-center gap-1 mt-1">
+            <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[9px] font-extrabold whitespace-nowrap shrink-0 ${trendBg} ${trendColor}`}>
+              <TrendIcon size={9} className={trendColor} />
+              {badge}
+            </span>
+            {desc && (
+              <span className="text-[9px] text-slate-400 font-medium leading-none truncate max-w-[100px] sm:max-w-none">
+                {desc}
+              </span>
+            )}
           </div>
         )}
       </div>
