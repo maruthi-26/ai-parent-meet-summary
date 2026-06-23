@@ -242,7 +242,7 @@ export default function DashboardLayout({ children }) {
       </AnimatePresence>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden font-sans">
+      <div className="flex-1 flex flex-col min-w-0 h-full w-full overflow-hidden font-sans">
         {/* Top Navbar */}
         <header className="bg-white/80 backdrop-blur-sm border-b border-orange-100 sticky top-0 z-30 px-4 lg:px-8 py-3 flex items-center justify-between gap-4 flex-shrink-0">
           {/* Mobile hamburger */}
@@ -453,14 +453,17 @@ export default function DashboardLayout({ children }) {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-slate-50/10">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {children}
-          </motion.div>
+        <main className="flex-1 w-full max-w-full overflow-y-auto overflow-x-hidden bg-slate-50/10">
+          <div className="p-4 lg:p-8 w-full max-w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full"
+            >
+              {children}
+            </motion.div>
+          </div>
         </main>
       </div>
     </div>

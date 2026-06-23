@@ -159,7 +159,7 @@ export default function AdminAnalytics() {
       />
 
       {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8 w-full">
         <StatCard
           title="Students"
           value={data?.totalStudents || 0}
@@ -235,7 +235,7 @@ export default function AdminAnalytics() {
       </motion.div>
 
       {/* Top Performing Teachers rankings */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}
           className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-5 border border-amber-100 shadow-sm relative overflow-hidden flex flex-col justify-between"
@@ -293,7 +293,7 @@ export default function AdminAnalytics() {
       </div>
 
       {/* Pie + Teacher Table */}
-      <div className="grid lg:grid-cols-12 gap-6">
+      <div className="grid lg:grid-cols-12 gap-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
           className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 lg:col-span-4"
@@ -329,7 +329,7 @@ export default function AdminAnalytics() {
           {data?.teacherPerformance?.length === 0 ? (
             <div className="flex items-center justify-center h-48 text-slate-400 text-sm">No teacher performance data yet</div>
           ) : (
-            <div className="overflow-auto">
+            <div className="overflow-x-auto -mx-6 px-6">
               <table className="w-full text-xs sm:text-sm">
                 <thead>
                   <tr className="border-b border-slate-100 text-slate-500">
