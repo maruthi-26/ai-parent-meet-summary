@@ -94,7 +94,7 @@ const forgotPassword = async (req, res, next) => {
     });
 
     // Build reset link — user receives raw token in URL
-    const frontendUrl = process.env.FRONTEND_URL || "https://parent-summary-frontend.onrender.com";
+    const frontendUrl = process.env.FRONTEND_URL || "https://ai-parent-meet-summary.onrender.com";
     const resetLink = `${frontendUrl}/reset-password/${rawToken}`;
 
     // TODO: Replace with real email service in production
