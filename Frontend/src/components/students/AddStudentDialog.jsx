@@ -123,69 +123,96 @@ export default function AddStudentDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          <Input
-            placeholder="Student Name"
-            value={formData.name}
-            required
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                name: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="student-name" className="text-xs font-semibold text-slate-500 block mb-1">Student Name</label>
+            <Input
+              id="student-name"
+              name="name"
+              placeholder="Student Name"
+              value={formData.name}
+              required
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  name: e.target.value,
+                })
+              }
+            />
+          </div>
 
-          <Input
-            placeholder="Class"
-            value={formData.className}
-            required
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                className: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="student-class" className="text-xs font-semibold text-slate-500 block mb-1">Class</label>
+            <Input
+              id="student-class"
+              name="className"
+              placeholder="Class"
+              value={formData.className}
+              required
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  className: e.target.value,
+                })
+              }
+            />
+          </div>
 
-          <Input
-            placeholder="Parent Name"
-            value={formData.parentName}
-            required
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                parentName: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="parent-name" className="text-xs font-semibold text-slate-500 block mb-1">Parent Name</label>
+            <Input
+              id="parent-name"
+              name="parentName"
+              placeholder="Parent Name"
+              value={formData.parentName}
+              required
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  parentName: e.target.value,
+                })
+              }
+            />
+          </div>
 
-          <Input
-            placeholder="Parent Phone"
-            value={formData.parentPhone}
-            required
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                parentPhone: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="parent-phone" className="text-xs font-semibold text-slate-500 block mb-1">Parent Phone</label>
+            <Input
+              id="parent-phone"
+              name="parentPhone"
+              placeholder="Parent Phone"
+              value={formData.parentPhone}
+              required
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  parentPhone: e.target.value,
+                })
+              }
+            />
+          </div>
 
-          <Input
-            placeholder="Parent Email"
-            type="email"
-            value={formData.parentEmail}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                parentEmail: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="parent-email" className="text-xs font-semibold text-slate-500 block mb-1">Parent Email</label>
+            <Input
+              id="parent-email"
+              name="parentEmail"
+              type="email"
+              placeholder="Parent Email"
+              value={formData.parentEmail}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  parentEmail: e.target.value,
+                })
+              }
+            />
+          </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-slate-500">Gender</label>
+            <label htmlFor="student-gender" className="text-xs font-semibold text-slate-500">Gender</label>
             <select
+              id="student-gender"
+              name="gender"
               value={formData.gender}
               onChange={(e) =>
                 setFormData({
@@ -202,8 +229,10 @@ export default function AddStudentDialog({
 
           {isAdmin && (
             <div className="space-y-1">
-              <label className="text-xs font-semibold text-slate-500">Assigned Teacher *</label>
+              <label htmlFor="assigned-teacher" className="text-xs font-semibold text-slate-500">Assigned Teacher *</label>
               <select
+                id="assigned-teacher"
+                name="teacherId"
                 value={formData.teacherId}
                 required
                 onChange={(e) =>

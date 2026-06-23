@@ -105,47 +105,64 @@ export default function AddTeacherDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            placeholder="Name"
-            value={formData.name}
-            required
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                name: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="teacher-name" className="text-xs font-semibold text-slate-500 block mb-1">Name</label>
+            <Input
+              id="teacher-name"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              required
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  name: e.target.value,
+                })
+              }
+            />
+          </div>
 
-          <Input
-            placeholder="Email"
-            type="email"
-            value={formData.email}
-            required
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                email: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="teacher-email" className="text-xs font-semibold text-slate-500 block mb-1">Email</label>
+            <Input
+              id="teacher-email"
+              name="email"
+              placeholder="Email"
+              type="email"
+              value={formData.email}
+              required
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  email: e.target.value,
+                })
+              }
+            />
+          </div>
 
-          <Input
-            type="password"
-            placeholder={teacher ? "Password (leave blank to keep current)" : "Password"}
-            value={formData.password}
-            required={!teacher}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                password: e.target.value,
-              })
-            }
-          />
+          <div>
+            <label htmlFor="teacher-password" className="text-xs font-semibold text-slate-500 block mb-1">Password</label>
+            <Input
+              id="teacher-password"
+              name="password"
+              type="password"
+              placeholder={teacher ? "Password (leave blank to keep current)" : "Password"}
+              value={formData.password}
+              required={!teacher}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  password: e.target.value,
+                })
+              }
+            />
+          </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-slate-500">Role</label>
+            <label htmlFor="teacher-role" className="text-xs font-semibold text-slate-500">Role</label>
             <select
+              id="teacher-role"
+              name="role"
               value={formData.role}
               onChange={(e) =>
                 setFormData({
@@ -161,8 +178,10 @@ export default function AddTeacherDialog({
           </div>
 
           <div className="space-y-1">
-            <label className="text-xs font-semibold text-slate-500">Gender</label>
+            <label htmlFor="teacher-gender" className="text-xs font-semibold text-slate-500">Gender</label>
             <select
+              id="teacher-gender"
+              name="gender"
               value={formData.gender}
               onChange={(e) =>
                 setFormData({
@@ -178,16 +197,21 @@ export default function AddTeacherDialog({
           </div>
 
           {formData.role === "TEACHER" && (
-            <Input
-              placeholder="Assigned Classes (e.g. Nursery, LKG, UKG)"
-              value={formData.classes}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  classes: e.target.value,
-                })
-              }
-            />
+            <div>
+              <label htmlFor="teacher-classes" className="text-xs font-semibold text-slate-500 block mb-1">Assigned Classes</label>
+              <Input
+                id="teacher-classes"
+                name="classes"
+                placeholder="Assigned Classes (e.g. Nursery, LKG, UKG)"
+                value={formData.classes}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    classes: e.target.value,
+                  })
+                }
+              />
+            </div>
           )}
 
           <Button type="submit" className="w-full" disabled={isSubmitting}>

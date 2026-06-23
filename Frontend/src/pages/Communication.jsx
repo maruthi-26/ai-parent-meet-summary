@@ -214,8 +214,11 @@ export default function Communication() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
           {/* Search bar */}
           <div className="relative">
+            <label htmlFor="search-message" className="sr-only">Search message text or recipient</label>
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
+              id="search-message"
+              name="search"
               type="text"
               placeholder="Search message text, recipient..."
               value={search}
@@ -225,46 +228,66 @@ export default function Communication() {
           </div>
 
           {/* Type Filter */}
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-            className="px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-600 font-semibold"
-          >
-            <option value="ALL">All Types</option>
-            <option value="Parent Message">Parent Messages</option>
-            <option value="Notice">School Notices</option>
-          </select>
+          <div>
+            <label htmlFor="filter-type" className="sr-only">Filter by message type</label>
+            <select
+              id="filter-type"
+              name="typeFilter"
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value)}
+              className="px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-600 font-semibold w-full"
+            >
+              <option value="ALL">All Types</option>
+              <option value="Parent Message">Parent Messages</option>
+              <option value="Notice">School Notices</option>
+            </select>
+          </div>
 
           {/* Status Filter */}
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-600 font-semibold"
-          >
-            <option value="ALL">All Statuses</option>
-            <option value="Sent">Sent (WhatsApp)</option>
-            <option value="Pending">Pending Share</option>
-            <option value="Published">Published Notices</option>
-          </select>
+          <div>
+            <label htmlFor="filter-status" className="sr-only">Filter by status</label>
+            <select
+              id="filter-status"
+              name="statusFilter"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-600 font-semibold w-full"
+            >
+              <option value="ALL">All Statuses</option>
+              <option value="Sent">Sent (WhatsApp)</option>
+              <option value="Pending">Pending Share</option>
+              <option value="Published">Published Notices</option>
+            </select>
+          </div>
 
           {/* Teacher Filter */}
-          <select
-            value={teacherFilter}
-            onChange={(e) => setTeacherFilter(e.target.value)}
-            className="px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-600 font-semibold"
-          >
-            {uniqueTeachers.map((t) => (
-              <option key={t} value={t}>{t === "ALL" ? "All Senders" : t}</option>
-            ))}
-          </select>
+          <div>
+            <label htmlFor="filter-teacher" className="sr-only">Filter by sender</label>
+            <select
+              id="filter-teacher"
+              name="teacherFilter"
+              value={teacherFilter}
+              onChange={(e) => setTeacherFilter(e.target.value)}
+              className="px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-600 font-semibold w-full"
+            >
+              {uniqueTeachers.map((t) => (
+                <option key={t} value={t}>{t === "ALL" ? "All Senders" : t}</option>
+              ))}
+            </select>
+          </div>
 
           {/* Date Filter */}
-          <input
-            type="date"
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-            className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-500 font-semibold"
-          />
+          <div>
+            <label htmlFor="filter-date" className="sr-only">Filter by date</label>
+            <input
+              id="filter-date"
+              name="dateFilter"
+              type="date"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white text-slate-500 font-semibold w-full"
+            />
+          </div>
         </div>
       </div>
 

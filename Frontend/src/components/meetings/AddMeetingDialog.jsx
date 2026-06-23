@@ -84,8 +84,10 @@ export default function AddMeetingDialog({ onMeetingCreated }) {
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
           <div>
-            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Student</label>
+            <label htmlFor="meeting-student" className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Student</label>
             <select
+              id="meeting-student"
+              name="studentId"
               className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white transition-all"
               value={formData.studentId}
               onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
@@ -101,8 +103,10 @@ export default function AddMeetingDialog({ onMeetingCreated }) {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Date</label>
+              <label htmlFor="meeting-date" className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Date</label>
               <input
+                id="meeting-date"
+                name="meetingDate"
                 type="date"
                 value={formData.meetingDate}
                 onChange={(e) => setFormData({ ...formData, meetingDate: e.target.value })}
@@ -110,8 +114,10 @@ export default function AddMeetingDialog({ onMeetingCreated }) {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Time</label>
+              <label htmlFor="meeting-time" className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Time</label>
               <input
+                id="meeting-time"
+                name="meetingTime"
                 type="time"
                 value={formData.meetingTime}
                 onChange={(e) => setFormData({ ...formData, meetingTime: e.target.value })}
@@ -121,8 +127,10 @@ export default function AddMeetingDialog({ onMeetingCreated }) {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Status</label>
+            <label htmlFor="meeting-status" className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Status</label>
             <select
+              id="meeting-status"
+              name="meetingStatus"
               value={formData.meetingStatus}
               onChange={(e) => setFormData({ ...formData, meetingStatus: e.target.value })}
               className="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white transition-all"
@@ -135,8 +143,10 @@ export default function AddMeetingDialog({ onMeetingCreated }) {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Meeting Notes (Optional)</label>
+            <label htmlFor="meeting-notes" className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Meeting Notes (Optional)</label>
             <textarea
+              id="meeting-notes"
+              name="notes"
               placeholder="Describe what was discussed in the parent meeting..."
               rows={4}
               value={formData.notes}

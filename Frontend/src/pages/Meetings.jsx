@@ -132,8 +132,11 @@ export default function Meetings() {
         className="flex flex-col sm:flex-row gap-3 mb-5"
       >
         <div className="relative flex-1">
+          <label htmlFor="search-meetings" className="sr-only">Search by student, teacher or notes</label>
           <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
+            id="search-meetings"
+            name="search"
             type="text"
             placeholder="Search by student, teacher or notes..."
             value={search}
@@ -141,17 +144,22 @@ export default function Meetings() {
             className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white transition-all"
           />
         </div>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white transition-all text-slate-600 font-medium"
-        >
-          <option value="ALL">All Statuses</option>
-          <option value="Scheduled">Scheduled</option>
-          <option value="Completed">Completed</option>
-          <option value="Follow-Up Required">Follow-Up Required</option>
-          <option value="Closed">Closed</option>
-        </select>
+        <div>
+          <label htmlFor="filter-status-meetings" className="sr-only">Filter by status</label>
+          <select
+            id="filter-status-meetings"
+            name="statusFilter"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white transition-all text-slate-600 font-medium w-full"
+          >
+            <option value="ALL">All Statuses</option>
+            <option value="Scheduled">Scheduled</option>
+            <option value="Completed">Completed</option>
+            <option value="Follow-Up Required">Follow-Up Required</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
       </motion.div>
 
       {isLoading ? (
