@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, GraduationCap } from "lucide-react";
 import api from "../services/api";
@@ -156,6 +156,16 @@ export default function Login() {
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+            </div>
+
+            {/* Forgot Password */}
+            <div className="flex justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-xs font-medium text-slate-400 hover:text-orange-500 transition-colors"
+              >
+                Forgot Password?
+              </Link>
             </div>
 
             <motion.button

@@ -17,6 +17,8 @@ model Teacher {
   gender    String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  resetToken        String?   @unique
+  resetTokenExpiry  DateTime?
   meetings  Meeting[]
   notices   Notice[]
   students  Student[]

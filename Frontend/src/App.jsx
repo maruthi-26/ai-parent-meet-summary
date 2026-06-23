@@ -17,6 +17,8 @@ import TeacherNotices from "./pages/teacher/TeacherNotices";
 import ParentMessages from "./pages/ParentMessages";
 import ParentSatisfaction from "./pages/ParentSatisfaction";
 import PublicFeedback from "./pages/PublicFeedback";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import ActivityFeed from "./pages/ActivityFeed";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -31,6 +33,8 @@ function App() {
           {/* Public */}
           <Route path="/" element={<Login />} />
           <Route path="/feedback/:meetingId" element={<PublicFeedback />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           {/* Admin Routes */}
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
