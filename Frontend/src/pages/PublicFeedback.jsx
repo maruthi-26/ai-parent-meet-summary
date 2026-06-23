@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Star, CheckCircle, AlertCircle, Smile, Frown, Meh } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, CheckCircle2, AlertCircle, ChevronDown, Sparkles } from "lucide-react";
 import api from "../services/api";
 import toast from "react-hot-toast";
 
@@ -79,7 +79,7 @@ export default function PublicFeedback() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-        <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-sm border border-slate-100 text-center space-y-4">
+        <div className="w-full max-w-md bg-white rounded-2xl p-8 shadow-md border border-slate-100 text-center space-y-4">
           <div className="w-12 h-12 rounded-full border-4 border-orange-500/20 border-t-orange-500 animate-spin mx-auto" />
           <p className="text-sm font-semibold text-slate-500">Loading meeting details...</p>
         </div>
@@ -90,10 +90,10 @@ export default function PublicFeedback() {
   if (errorMsg) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-        <div className="w-full max-w-md bg-white rounded-3xl p-8 shadow-sm border border-slate-100 text-center space-y-4">
-          <AlertCircle className="w-12 h-12 text-rose-500 mx-auto" />
-          <h2 className="text-lg font-bold text-slate-800">Feedback Unavailable</h2>
-          <p className="text-sm text-slate-500">{errorMsg}</p>
+        <div className="w-full max-w-md bg-white rounded-2xl p-8 shadow-md border border-slate-100 text-center space-y-4">
+          <AlertCircle className="w-12 h-12 text-rose-500 mx-auto animate-bounce" />
+          <h2 className="text-lg font-bold text-slate-800">Feedback Link Expired</h2>
+          <p className="text-sm text-slate-500 leading-relaxed">{errorMsg}</p>
         </div>
       </div>
     );
@@ -101,40 +101,51 @@ export default function PublicFeedback() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md bg-white rounded-3xl p-8 shadow-sm border border-slate-100 text-center space-y-6"
+          transition={{ duration: 0.4 }}
+          className="w-full max-w-md bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-100 text-center space-y-6 overflow-hidden relative"
         >
-          <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mx-auto border border-teal-100">
-            <CheckCircle className="w-8 h-8 text-teal-600" />
+          {/* Subtle branding accent line */}
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-brand-gradient" />
+
+          <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mx-auto border border-teal-100 shadow-sm">
+            <CheckCircle2 className="w-8 h-8 text-teal-600" />
           </div>
+          
           <div>
-            <h2 className="text-xl font-extrabold text-slate-800">Thank You!</h2>
-            <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-bold">FirstCry Intellitots Operations</p>
+            <h2 className="text-2xl font-black text-slate-800 tracking-tight">Thank You!</h2>
+            <p className="text-[10px] text-orange-600 font-extrabold uppercase tracking-widest mt-1">
+              FirstCry Intellitots
+            </p>
             <p className="text-sm text-slate-500 mt-4 leading-relaxed">
-              Thank you for your feedback. Your response has been logged and will help us further support your child's learning journey.
+              Your feedback was logged successfully. It directly supports our efforts to offer the best care and learning experience for your child.
             </p>
           </div>
 
-          <div className="pt-4 border-t border-slate-50 space-y-3 text-left">
-            <div className="flex justify-between text-xs font-semibold text-slate-400">
+          <div className="pt-5 border-t border-slate-100 space-y-3.5 text-left">
+            <div className="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-wider">
               <span>Student</span>
-              <span className="text-slate-700">{meeting?.student?.name}</span>
+              <span className="text-slate-800 font-extrabold">{meeting?.student?.name}</span>
             </div>
-            <div className="flex justify-between text-xs font-semibold text-slate-400">
+            <div className="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <span>Class</span>
+              <span className="text-slate-800 font-extrabold">{meeting?.student?.className}</span>
+            </div>
+            <div className="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-wider">
               <span>Rating Given</span>
-              <span className="text-amber-500 flex items-center gap-0.5">
-                {rating} <Star size={12} className="fill-amber-500 text-amber-500" />
+              <span className="text-amber-500 flex items-center gap-0.5 font-extrabold">
+                {rating} <Star size={12} className="fill-amber-400 text-amber-400" />
               </span>
             </div>
-            <div className="flex justify-between text-xs font-semibold text-slate-400">
+            <div className="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-wider">
               <span>Satisfaction</span>
-              <span className="text-slate-700 font-bold">{satisfactionLevel}</span>
+              <span className="text-slate-800 font-extrabold">{satisfactionLevel}</span>
             </div>
             {comment && (
-              <div className="mt-2 p-3 bg-slate-50 rounded-xl text-xs text-slate-600 italic">
+              <div className="mt-3 p-3 bg-slate-50 rounded-xl text-xs text-slate-600 border border-slate-100 italic leading-relaxed">
                 "{comment}"
               </div>
             )}
@@ -144,37 +155,37 @@ export default function PublicFeedback() {
     );
   }
 
-  const satisfactions = [
-    { value: "Very Satisfied", icon: Smile, color: "text-teal-600 bg-teal-50 border-teal-200" },
-    { value: "Satisfied", icon: Smile, color: "text-emerald-600 bg-emerald-50 border-emerald-200" },
-    { value: "Neutral", icon: Meh, color: "text-slate-600 bg-slate-50 border-slate-200" },
-    { value: "Dissatisfied", icon: Frown, color: "text-amber-600 bg-amber-50 border-amber-200" },
-    { value: "Very Dissatisfied", icon: Frown, color: "text-rose-600 bg-rose-50 border-rose-200" }
-  ];
-
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6 md:p-8">
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-lg bg-white rounded-3xl p-8 shadow-sm border border-slate-100"
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-100 overflow-hidden relative"
       >
+        {/* Subtle branding accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-brand-gradient" />
+
         <div className="text-center mb-6">
-          <div className="h-10 w-fit px-4 py-1.5 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs mx-auto mb-3">
-            FirstCry Intellitots
+          <div className="h-9 w-fit px-3 py-1.5 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 font-bold text-[10px] uppercase tracking-wider mx-auto mb-4">
+            Preschool Operations
           </div>
-          <h1 className="text-xl font-black text-slate-800 tracking-tight">Parent Feedback Form</h1>
-          <p className="text-xs text-slate-400 mt-1">
-            For meeting regarding <span className="font-bold text-slate-600">{meeting?.student?.name}</span> (Class: {meeting?.student?.className})
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight flex items-center justify-center gap-1.5">
+            ⭐ Parent Feedback
+          </h1>
+          <p className="text-xs text-slate-400 mt-2 leading-relaxed max-w-sm mx-auto">
+            We value your partnership. Please share your feedback on the recent parent-teacher discussion for <span className="font-semibold text-slate-700">{meeting?.student?.name}</span> ({meeting?.student?.className}).
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           
-          {/* Star Rating */}
-          <div className="space-y-2 text-center">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Rate the Discussion</label>
-            <div className="flex justify-center gap-2">
+          {/* Star Rating Selector */}
+          <div className="space-y-2 text-center p-3 bg-slate-50/50 rounded-2xl border border-slate-100/50">
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">
+              Rate the Discussion
+            </label>
+            <div className="flex justify-center gap-1.5 py-1">
               {[1, 2, 3, 4, 5].map((star) => {
                 const isActive = star <= (hoveredRating || rating);
                 return (
@@ -184,70 +195,82 @@ export default function PublicFeedback() {
                     onClick={() => setRating(star)}
                     onMouseEnter={() => setHoveredRating(star)}
                     onMouseLeave={() => setHoveredRating(0)}
-                    className="p-1 text-slate-200 hover:scale-110 transition-all focus:outline-none"
+                    className="p-1 hover:scale-115 transition-transform focus:outline-none"
                   >
                     <Star
-                      size={36}
-                      className={isActive ? "fill-amber-400 text-amber-400" : "text-slate-200"}
+                      size={32}
+                      className={`transition-colors ${
+                        isActive 
+                          ? "fill-amber-400 text-amber-400 filter drop-shadow-[0_2px_4px_rgba(251,191,36,0.2)]" 
+                          : "text-slate-200"
+                      }`}
                     />
                   </button>
                 );
               })}
             </div>
-            <p className="text-[10px] text-slate-400 italic">Select 1 to 5 stars</p>
+            <p className="text-[9px] text-slate-400 italic">Select 1 to 5 stars based on your experience</p>
           </div>
 
-          {/* Satisfaction Level Select */}
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Satisfaction Level</label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {satisfactions.map((sat) => {
-                const IconComp = sat.icon;
-                const isSelected = satisfactionLevel === sat.value;
-                return (
-                  <button
-                    key={sat.value}
-                    type="button"
-                    onClick={() => setSatisfactionLevel(sat.value)}
-                    className={`flex items-center gap-2 p-2.5 rounded-xl border text-xs font-bold transition-all justify-center ${
-                      isSelected
-                        ? sat.color + " ring-2 ring-offset-1 ring-orange-500/20"
-                        : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                    }`}
-                  >
-                    <IconComp size={14} />
-                    {sat.value}
-                  </button>
-                );
-              })}
+          {/* Satisfaction Dropdown Selector */}
+          <div className="space-y-1.5">
+            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+              Satisfaction Level
+            </label>
+            <div className="relative">
+              <select
+                value={satisfactionLevel}
+                onChange={(e) => setSatisfactionLevel(e.target.value)}
+                disabled={isSubmitting}
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-white text-slate-700 disabled:opacity-60 appearance-none cursor-pointer pr-10"
+              >
+                <option value="" disabled>Select your satisfaction level</option>
+                <option value="Very Satisfied">😊 Very Satisfied</option>
+                <option value="Satisfied">🙂 Satisfied</option>
+                <option value="Neutral">😐 Neutral</option>
+                <option value="Dissatisfied">🙁 Dissatisfied</option>
+                <option value="Very Dissatisfied">😞 Very Dissatisfied</option>
+              </select>
+              <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                <ChevronDown size={16} />
+              </div>
             </div>
           </div>
 
-          {/* Comment Area */}
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Additional Comments (Optional)</label>
+          {/* Comments Box */}
+          <div className="space-y-1.5">
+            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+              Additional Comments
+            </label>
             <textarea
-              placeholder="Share details about what went well, or what we can work on to improve child development."
+              placeholder="What went well or how can we improve?"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-full min-h-[100px] p-3 text-xs sm:text-sm rounded-2xl border border-slate-200 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 leading-relaxed transition-all"
+              className="w-full min-h-[90px] p-3 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent leading-relaxed transition-all placeholder:text-slate-400/80 resize-none"
             />
-            <p className="text-[9px] text-slate-400 italic">Press Enter to submit feedback directly, or Shift + Enter for new lines.</p>
+            <p className="text-[9px] text-slate-400/80 italic leading-snug">
+              Press Enter to submit, or Shift + Enter for new lines.
+            </p>
           </div>
 
           {/* Submit Button */}
-          <button
+          <motion.button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-11 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-bold text-sm flex items-center justify-center transition-all disabled:opacity-50 shadow-sm"
+            whileHover={{ scale: isSubmitting ? 1 : 1.01 }}
+            whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+            className="w-full py-3.5 rounded-xl bg-brand-gradient text-white font-semibold text-sm shadow-sm hover:shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isSubmitting ? (
-              <div className="w-5 h-5 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+              <>
+                <div className="w-4 h-4 rounded-full border-2 border-white/40 border-t-white animate-spin" />
+                Submitting Feedback...
+              </>
             ) : (
               "Submit Feedback"
             )}
-          </button>
+          </motion.button>
         </form>
       </motion.div>
     </div>

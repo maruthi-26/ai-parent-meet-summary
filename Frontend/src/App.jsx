@@ -1,7 +1,9 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 import { ToastProvider } from "./context/ToastContext";
 
 import Login from "./pages/Login";
+import SetupAdmin from "./pages/SetupAdmin";
 import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
 import StudentProfile from "./pages/StudentProfile";
@@ -23,6 +25,43 @@ import ActivityFeed from "./pages/ActivityFeed";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CommandPalette from "./components/ui/CommandPalette";
+import api from "./services/api";
+import { PageLoader } from "./components/ui/LoadingSpinner";
+
+function SetupGuard() {
+  const [setupRequired, setSetupRequired] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const checkSetupStatus = async () => {
+      try {
+        const res = await api.get("/setup/status");
+        setSetupRequired(res.data.setupRequired);
+      } catch (err) {
+        setSetupRequired(false);
+      }
+    };
+    checkSetupStatus();
+  }, [location.pathname]);
+
+  if (setupRequired === null) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <PageLoader />
+      </div>
+    );
+  }
+
+  if (setupRequired && location.pathname !== "/setup") {
+    return <Navigate to="/setup" replace />;
+  }
+
+  if (!setupRequired && location.pathname === "/setup") {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
+}
 
 function App() {
   return (
@@ -30,33 +69,38 @@ function App() {
       <ToastProvider>
         <CommandPalette />
         <Routes>
-          {/* Public */}
-          <Route path="/" element={<Login />} />
-          <Route path="/feedback/:meetingId" element={<PublicFeedback />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route element={<SetupGuard />}>
+            {/* Setup Page */}
+            <Route path="/setup" element={<SetupAdmin />} />
 
-          {/* Admin Routes */}
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/students" element={<ProtectedRoute><Students /></ProtectedRoute>} />
-          <Route path="/students/:id" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
-          <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />
-          <Route path="/meetings" element={<ProtectedRoute><Meetings /></ProtectedRoute>} />
-          <Route path="/meetings/:id" element={<ProtectedRoute><MeetingWorkspace /></ProtectedRoute>} />
-          <Route path="/communication" element={<ProtectedRoute><Communication /></ProtectedRoute>} />
-          <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
-          <Route path="/admin/notices" element={<ProtectedRoute><AINotices /></ProtectedRoute>} />
-          <Route path="/parent-messages" element={<ProtectedRoute><ParentMessages /></ProtectedRoute>} />
-          <Route path="/parent-satisfaction" element={<ProtectedRoute><ParentSatisfaction /></ProtectedRoute>} />
-          <Route path="/activity-feed" element={<ProtectedRoute><ActivityFeed /></ProtectedRoute>} />
+            {/* Public */}
+            <Route path="/" element={<Login />} />
+            <Route path="/feedback/:meetingId" element={<PublicFeedback />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-          {/* Teacher Routes */}
-          <Route path="/teacherDashboard" element={<ProtectedRoute><TeacherDashboard /></ProtectedRoute>} />
-          <Route path="/teacher/analytics" element={<ProtectedRoute><TeacherAnalytics /></ProtectedRoute>} />
-          <Route path="/teacher/notices" element={<ProtectedRoute><TeacherNotices /></ProtectedRoute>} />
+            {/* Admin Routes */}
+            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/students" element={<ProtectedRoute><Students /></ProtectedRoute>} />
+            <Route path="/students/:id" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
+            <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />
+            <Route path="/meetings" element={<ProtectedRoute><Meetings /></ProtectedRoute>} />
+            <Route path="/meetings/:id" element={<ProtectedRoute><MeetingWorkspace /></ProtectedRoute>} />
+            <Route path="/communication" element={<ProtectedRoute><Communication /></ProtectedRoute>} />
+            <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
+            <Route path="/admin/notices" element={<ProtectedRoute><AINotices /></ProtectedRoute>} />
+            <Route path="/parent-messages" element={<ProtectedRoute><ParentMessages /></ProtectedRoute>} />
+            <Route path="/parent-satisfaction" element={<ProtectedRoute><ParentSatisfaction /></ProtectedRoute>} />
+            <Route path="/activity-feed" element={<ProtectedRoute><ActivityFeed /></ProtectedRoute>} />
 
-          {/* Legacy redirect fix */}
-          <Route path="/teacher" element={<Navigate to="/teacherDashboard" replace />} />
+            {/* Teacher Routes */}
+            <Route path="/teacherDashboard" element={<ProtectedRoute><TeacherDashboard /></ProtectedRoute>} />
+            <Route path="/teacher/analytics" element={<ProtectedRoute><TeacherAnalytics /></ProtectedRoute>} />
+            <Route path="/teacher/notices" element={<ProtectedRoute><TeacherNotices /></ProtectedRoute>} />
+
+            {/* Legacy redirect fix */}
+            <Route path="/teacher" element={<Navigate to="/teacherDashboard" replace />} />
+          </Route>
         </Routes>
       </ToastProvider>
     </BrowserRouter>

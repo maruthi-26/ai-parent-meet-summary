@@ -5,6 +5,7 @@ const prisma = require("./config/prisma");
 const teacherRoutes = require("./routes/teacher.routes");
 const studentRoutes = require("./routes/student.routes");
 const authRoutes = require("./routes/auth.routes");
+const setupRoutes = require("./routes/setup.routes");
 const meetingRoutes = require("./routes/meeting.routes");
 const aiRoutes = require("./routes/ai.routes");
 const dashboardRoutes = require("./routes/dashboard.routes");
@@ -48,6 +49,7 @@ app.get("/health", async (req, res, next) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/setup", setupRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/meetings", meetingRoutes);
