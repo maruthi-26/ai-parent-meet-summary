@@ -22,6 +22,7 @@ import PublicFeedback from "./pages/PublicFeedback";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import ActivityFeed from "./pages/ActivityFeed";
+import NotFound from "./pages/NotFound";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CommandPalette from "./components/ui/CommandPalette";
@@ -80,26 +81,29 @@ function App() {
             <Route path="/reset-password/:token" element={<ResetPassword />} />
 
             {/* Admin Routes */}
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/students" element={<ProtectedRoute><Students /></ProtectedRoute>} />
-            <Route path="/students/:id" element={<ProtectedRoute><StudentProfile /></ProtectedRoute>} />
-            <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />
-            <Route path="/meetings" element={<ProtectedRoute><Meetings /></ProtectedRoute>} />
-            <Route path="/meetings/:id" element={<ProtectedRoute><MeetingWorkspace /></ProtectedRoute>} />
-            <Route path="/communication" element={<ProtectedRoute><Communication /></ProtectedRoute>} />
-            <Route path="/admin/analytics" element={<ProtectedRoute><AdminAnalytics /></ProtectedRoute>} />
-            <Route path="/admin/notices" element={<ProtectedRoute><AINotices /></ProtectedRoute>} />
-            <Route path="/parent-messages" element={<ProtectedRoute><ParentMessages /></ProtectedRoute>} />
-            <Route path="/parent-satisfaction" element={<ProtectedRoute><ParentSatisfaction /></ProtectedRoute>} />
-            <Route path="/activity-feed" element={<ProtectedRoute><ActivityFeed /></ProtectedRoute>} />
+            <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Dashboard /></ProtectedRoute>} />
+            <Route path="/students" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Students /></ProtectedRoute>} />
+            <Route path="/students/:id" element={<ProtectedRoute allowedRoles={["ADMIN"]}><StudentProfile /></ProtectedRoute>} />
+            <Route path="/teachers" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Teachers /></ProtectedRoute>} />
+            <Route path="/meetings" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Meetings /></ProtectedRoute>} />
+            <Route path="/meetings/:id" element={<ProtectedRoute allowedRoles={["ADMIN"]}><MeetingWorkspace /></ProtectedRoute>} />
+            <Route path="/communication" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Communication /></ProtectedRoute>} />
+            <Route path="/admin/analytics" element={<ProtectedRoute allowedRoles={["ADMIN"]}><AdminAnalytics /></ProtectedRoute>} />
+            <Route path="/admin/notices" element={<ProtectedRoute allowedRoles={["ADMIN"]}><AINotices /></ProtectedRoute>} />
+            <Route path="/parent-messages" element={<ProtectedRoute allowedRoles={["ADMIN"]}><ParentMessages /></ProtectedRoute>} />
+            <Route path="/parent-satisfaction" element={<ProtectedRoute allowedRoles={["ADMIN"]}><ParentSatisfaction /></ProtectedRoute>} />
+            <Route path="/activity-feed" element={<ProtectedRoute allowedRoles={["ADMIN"]}><ActivityFeed /></ProtectedRoute>} />
 
             {/* Teacher Routes */}
-            <Route path="/teacherDashboard" element={<ProtectedRoute><TeacherDashboard /></ProtectedRoute>} />
-            <Route path="/teacher/analytics" element={<ProtectedRoute><TeacherAnalytics /></ProtectedRoute>} />
-            <Route path="/teacher/notices" element={<ProtectedRoute><TeacherNotices /></ProtectedRoute>} />
+            <Route path="/teacherDashboard" element={<ProtectedRoute allowedRoles={["TEACHER"]}><TeacherDashboard /></ProtectedRoute>} />
+            <Route path="/teacher/analytics" element={<ProtectedRoute allowedRoles={["TEACHER"]}><TeacherAnalytics /></ProtectedRoute>} />
+            <Route path="/teacher/notices" element={<ProtectedRoute allowedRoles={["TEACHER"]}><TeacherNotices /></ProtectedRoute>} />
 
             {/* Legacy redirect fix */}
-            <Route path="/teacher" element={<Navigate to="/teacherDashboard" replace />} />
+            <Route path="/teacher" element={<ProtectedRoute allowedRoles={["TEACHER"]}><Navigate to="/teacherDashboard" replace /></ProtectedRoute>} />
+
+            {/* Wildcard 404 Route */}
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </ToastProvider>

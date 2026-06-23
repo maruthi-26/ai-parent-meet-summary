@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, GraduationCap } from "lucide-react";
@@ -6,12 +6,20 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
-
-
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isAuthenticated, user } = useAuth();
   const [formData, setFormData] = useState({ email: "", password: "" });
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      if (user.role === "ADMIN") {
+        navigate("/dashboard", { replace: true });
+      } else if (user.role === "TEACHER") {
+        navigate("/teacherDashboard", { replace: true });
+      }
+    }
+  }, [isAuthenticated, user, navigate]);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
