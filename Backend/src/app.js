@@ -22,8 +22,13 @@ const cors = require("cors");
 
 const allowedOrigins = [
   "http://localhost:5173",
-  process.env.FRONTEND_URL,
+  "https://parent-summary-frontend.onrender.com",
+  "https://ai-parent-meet-summary.onrender.com",
 ];
+
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
 
 app.use(
   cors({
