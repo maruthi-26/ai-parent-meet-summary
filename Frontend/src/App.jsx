@@ -80,21 +80,23 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-            {/* Admin Routes */}
+            {/* Shared Protected Routes (Admins and Teachers) */}
+            <Route path="/students" element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}><Students /></ProtectedRoute>} />
+            <Route path="/students/:id" element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}><StudentProfile /></ProtectedRoute>} />
+            <Route path="/meetings" element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}><Meetings /></ProtectedRoute>} />
+            <Route path="/meetings/:id" element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}><MeetingWorkspace /></ProtectedRoute>} />
+            <Route path="/communication" element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}><Communication /></ProtectedRoute>} />
+            <Route path="/parent-messages" element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}><ParentMessages /></ProtectedRoute>} />
+            <Route path="/activity-feed" element={<ProtectedRoute allowedRoles={["ADMIN", "TEACHER"]}><ActivityFeed /></ProtectedRoute>} />
+
+            {/* Admin Only Routes */}
             <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Dashboard /></ProtectedRoute>} />
-            <Route path="/students" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Students /></ProtectedRoute>} />
-            <Route path="/students/:id" element={<ProtectedRoute allowedRoles={["ADMIN"]}><StudentProfile /></ProtectedRoute>} />
             <Route path="/teachers" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Teachers /></ProtectedRoute>} />
-            <Route path="/meetings" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Meetings /></ProtectedRoute>} />
-            <Route path="/meetings/:id" element={<ProtectedRoute allowedRoles={["ADMIN"]}><MeetingWorkspace /></ProtectedRoute>} />
-            <Route path="/communication" element={<ProtectedRoute allowedRoles={["ADMIN"]}><Communication /></ProtectedRoute>} />
             <Route path="/admin/analytics" element={<ProtectedRoute allowedRoles={["ADMIN"]}><AdminAnalytics /></ProtectedRoute>} />
             <Route path="/admin/notices" element={<ProtectedRoute allowedRoles={["ADMIN"]}><AINotices /></ProtectedRoute>} />
-            <Route path="/parent-messages" element={<ProtectedRoute allowedRoles={["ADMIN"]}><ParentMessages /></ProtectedRoute>} />
             <Route path="/parent-satisfaction" element={<ProtectedRoute allowedRoles={["ADMIN"]}><ParentSatisfaction /></ProtectedRoute>} />
-            <Route path="/activity-feed" element={<ProtectedRoute allowedRoles={["ADMIN"]}><ActivityFeed /></ProtectedRoute>} />
 
-            {/* Teacher Routes */}
+            {/* Teacher Only Routes */}
             <Route path="/teacherDashboard" element={<ProtectedRoute allowedRoles={["TEACHER"]}><TeacherDashboard /></ProtectedRoute>} />
             <Route path="/teacher/analytics" element={<ProtectedRoute allowedRoles={["TEACHER"]}><TeacherAnalytics /></ProtectedRoute>} />
             <Route path="/teacher/notices" element={<ProtectedRoute allowedRoles={["TEACHER"]}><TeacherNotices /></ProtectedRoute>} />
